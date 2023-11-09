@@ -1,0 +1,30 @@
+	
+    entity Client {
+    	nom String required
+        adresse String required
+        email String required
+    }
+    
+    entity Commande {
+    	quantite Long
+    	dateCommande Instant
+        dateLivraison Instant
+        status Boolean 
+    }
+    
+    entity Sneakers {
+    	nom String
+        couleur String
+        stock Long
+    }
+    
+    relationship OneToMany {
+    	Client{commandes} to Commande
+    }
+    
+    relationship ManyToMany {
+    	Commande{sneakerss} to Sneakers
+    }
+    
+    dto Client, Commande, Sneakers with mapstruct
+    service Client, Commande, Sneakers with serviceImpl
