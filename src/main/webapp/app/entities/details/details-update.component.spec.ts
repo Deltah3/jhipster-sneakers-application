@@ -4,13 +4,11 @@ import { shallowMount, type MountingOptions } from '@vue/test-utils';
 import sinon, { type SinonStubbedInstance } from 'sinon';
 import { type RouteLocation } from 'vue-router';
 
-import SneakersUpdate from './sneakers-update.vue';
-import SneakersService from './sneakers.service';
+import DetailsUpdate from './details-update.vue';
+import DetailsService from './details.service';
 import AlertService from '@/shared/alert/alert.service';
 
-import DetailsService from '@/entities/details/details.service';
-
-type SneakersUpdateComponentType = InstanceType<typeof SneakersUpdate>;
+type DetailsUpdateComponentType = InstanceType<typeof DetailsUpdate>;
 
 let route: Partial<RouteLocation>;
 const routerGoMock = vitest.fn();
@@ -20,20 +18,20 @@ vitest.mock('vue-router', () => ({
   useRouter: () => ({ go: routerGoMock }),
 }));
 
-const sneakersSample = { id: 123 };
+const detailsSample = { id: 123 };
 
 describe('Component Tests', () => {
-  let mountOptions: MountingOptions<SneakersUpdateComponentType>['global'];
+  let mountOptions: MountingOptions<DetailsUpdateComponentType>['global'];
   let alertService: AlertService;
 
-  describe('Sneakers Management Update Component', () => {
-    let comp: SneakersUpdateComponentType;
-    let sneakersServiceStub: SinonStubbedInstance<SneakersService>;
+  describe('Details Management Update Component', () => {
+    let comp: DetailsUpdateComponentType;
+    let detailsServiceStub: SinonStubbedInstance<DetailsService>;
 
     beforeEach(() => {
       route = {};
-      sneakersServiceStub = sinon.createStubInstance<SneakersService>(SneakersService);
-      sneakersServiceStub.retrieve.onFirstCall().resolves(Promise.resolve([]));
+      detailsServiceStub = sinon.createStubInstance<DetailsService>(DetailsService);
+      detailsServiceStub.retrieve.onFirstCall().resolves(Promise.resolve([]));
 
       alertService = new AlertService({
         i18n: { t: vitest.fn() } as any,
@@ -52,11 +50,7 @@ describe('Component Tests', () => {
         },
         provide: {
           alertService,
-          sneakersService: () => sneakersServiceStub,
-          detailsService: () =>
-            sinon.createStubInstance<DetailsService>(DetailsService, {
-              retrieve: sinon.stub().resolves({}),
-            } as any),
+          detailsService: () => detailsServiceStub,
         },
       };
     });
@@ -68,34 +62,34 @@ describe('Component Tests', () => {
     describe('save', () => {
       it('Should call update service on save for existing entity', async () => {
         // GIVEN
-        const wrapper = shallowMount(SneakersUpdate, { global: mountOptions });
+        const wrapper = shallowMount(DetailsUpdate, { global: mountOptions });
         comp = wrapper.vm;
-        comp.sneakers = sneakersSample;
-        sneakersServiceStub.update.resolves(sneakersSample);
+        comp.details = detailsSample;
+        detailsServiceStub.update.resolves(detailsSample);
 
         // WHEN
         comp.save();
         await comp.$nextTick();
 
         // THEN
-        expect(sneakersServiceStub.update.calledWith(sneakersSample)).toBeTruthy();
+        expect(detailsServiceStub.update.calledWith(detailsSample)).toBeTruthy();
         expect(comp.isSaving).toEqual(false);
       });
 
       it('Should call create service on save for new entity', async () => {
         // GIVEN
         const entity = {};
-        sneakersServiceStub.create.resolves(entity);
-        const wrapper = shallowMount(SneakersUpdate, { global: mountOptions });
+        detailsServiceStub.create.resolves(entity);
+        const wrapper = shallowMount(DetailsUpdate, { global: mountOptions });
         comp = wrapper.vm;
-        comp.sneakers = entity;
+        comp.details = entity;
 
         // WHEN
         comp.save();
         await comp.$nextTick();
 
         // THEN
-        expect(sneakersServiceStub.create.calledWith(entity)).toBeTruthy();
+        expect(detailsServiceStub.create.calledWith(entity)).toBeTruthy();
         expect(comp.isSaving).toEqual(false);
       });
     });
@@ -103,28 +97,28 @@ describe('Component Tests', () => {
     describe('Before route enter', () => {
       it('Should retrieve data', async () => {
         // GIVEN
-        sneakersServiceStub.find.resolves(sneakersSample);
-        sneakersServiceStub.retrieve.resolves([sneakersSample]);
+        detailsServiceStub.find.resolves(detailsSample);
+        detailsServiceStub.retrieve.resolves([detailsSample]);
 
         // WHEN
         route = {
           params: {
-            sneakersId: '' + sneakersSample.id,
+            detailsId: '' + detailsSample.id,
           },
         };
-        const wrapper = shallowMount(SneakersUpdate, { global: mountOptions });
+        const wrapper = shallowMount(DetailsUpdate, { global: mountOptions });
         comp = wrapper.vm;
         await comp.$nextTick();
 
         // THEN
-        expect(comp.sneakers).toMatchObject(sneakersSample);
+        expect(comp.details).toMatchObject(detailsSample);
       });
     });
 
     describe('Previous state', () => {
       it('Should go previous state', async () => {
-        sneakersServiceStub.find.resolves(sneakersSample);
-        const wrapper = shallowMount(SneakersUpdate, { global: mountOptions });
+        detailsServiceStub.find.resolves(detailsSample);
+        const wrapper = shallowMount(DetailsUpdate, { global: mountOptions });
         comp = wrapper.vm;
         await comp.$nextTick();
 

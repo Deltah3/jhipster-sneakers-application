@@ -44,7 +44,7 @@ public class Commande implements Serializable {
         inverseJoinColumns = @JoinColumn(name = "sneakerss_id")
     )
     @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-    @JsonIgnoreProperties(value = { "commandes" }, allowSetters = true)
+    @JsonIgnoreProperties(value = { "produits", "commandes" }, allowSetters = true)
     private Set<Sneakers> sneakersses = new HashSet<>();
 
     @ManyToOne(fetch = FetchType.LAZY)

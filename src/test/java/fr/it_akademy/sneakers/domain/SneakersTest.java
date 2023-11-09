@@ -1,6 +1,7 @@
 package fr.it_akademy.sneakers.domain;
 
 import static fr.it_akademy.sneakers.domain.CommandeTestSamples.*;
+import static fr.it_akademy.sneakers.domain.DetailsTestSamples.*;
 import static fr.it_akademy.sneakers.domain.SneakersTestSamples.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -23,6 +24,18 @@ class SneakersTest {
 
         sneakers2 = getSneakersSample2();
         assertThat(sneakers1).isNotEqualTo(sneakers2);
+    }
+
+    @Test
+    void produitsTest() throws Exception {
+        Sneakers sneakers = getSneakersRandomSampleGenerator();
+        Details detailsBack = getDetailsRandomSampleGenerator();
+
+        sneakers.setProduits(detailsBack);
+        assertThat(sneakers.getProduits()).isEqualTo(detailsBack);
+
+        sneakers.produits(null);
+        assertThat(sneakers.getProduits()).isNull();
     }
 
     @Test

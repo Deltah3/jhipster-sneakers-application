@@ -7,6 +7,10 @@ const Client = () => import('@/entities/client/client.vue');
 const ClientUpdate = () => import('@/entities/client/client-update.vue');
 const ClientDetails = () => import('@/entities/client/client-details.vue');
 
+const Details = () => import('@/entities/details/details.vue');
+const DetailsUpdate = () => import('@/entities/details/details-update.vue');
+const DetailsDetails = () => import('@/entities/details/details-details.vue');
+
 const Commande = () => import('@/entities/commande/commande.vue');
 const CommandeUpdate = () => import('@/entities/commande/commande-update.vue');
 const CommandeDetails = () => import('@/entities/commande/commande-details.vue');
@@ -43,6 +47,30 @@ export default {
       path: 'client/:clientId/view',
       name: 'ClientView',
       component: ClientDetails,
+      meta: { authorities: [Authority.USER] },
+    },
+    {
+      path: 'details',
+      name: 'Details',
+      component: Details,
+      meta: { authorities: [Authority.USER] },
+    },
+    {
+      path: 'details/new',
+      name: 'DetailsCreate',
+      component: DetailsUpdate,
+      meta: { authorities: [Authority.USER] },
+    },
+    {
+      path: 'details/:detailsId/edit',
+      name: 'DetailsEdit',
+      component: DetailsUpdate,
+      meta: { authorities: [Authority.USER] },
+    },
+    {
+      path: 'details/:detailsId/view',
+      name: 'DetailsView',
+      component: DetailsDetails,
       meta: { authorities: [Authority.USER] },
     },
     {

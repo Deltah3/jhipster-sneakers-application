@@ -54,6 +54,7 @@ public class CacheConfiguration {
             createCache(cm, fr.it_akademy.sneakers.domain.Commande.class.getName() + ".sneakersses");
             createCache(cm, fr.it_akademy.sneakers.domain.Sneakers.class.getName());
             createCache(cm, fr.it_akademy.sneakers.domain.Sneakers.class.getName() + ".commandes");
+            createCache(cm, fr.it_akademy.sneakers.domain.Details.class.getName());
             // jhipster-needle-ehcache-add-entry
         };
     }

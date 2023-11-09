@@ -11,11 +11,17 @@ public class SneakersDTO implements Serializable {
 
     private Long id;
 
+    private Long stock;
+
     private String nom;
+
+    private Long taille;
 
     private String couleur;
 
-    private Long stock;
+    private Float prix;
+
+    private DetailsDTO produits;
 
     public Long getId() {
         return id;
@@ -23,6 +29,14 @@ public class SneakersDTO implements Serializable {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public Long getStock() {
+        return stock;
+    }
+
+    public void setStock(Long stock) {
+        this.stock = stock;
     }
 
     public String getNom() {
@@ -33,6 +47,14 @@ public class SneakersDTO implements Serializable {
         this.nom = nom;
     }
 
+    public Long getTaille() {
+        return taille;
+    }
+
+    public void setTaille(Long taille) {
+        this.taille = taille;
+    }
+
     public String getCouleur() {
         return couleur;
     }
@@ -41,12 +63,20 @@ public class SneakersDTO implements Serializable {
         this.couleur = couleur;
     }
 
-    public Long getStock() {
-        return stock;
+    public Float getPrix() {
+        return prix;
     }
 
-    public void setStock(Long stock) {
-        this.stock = stock;
+    public void setPrix(Float prix) {
+        this.prix = prix;
+    }
+
+    public DetailsDTO getProduits() {
+        return produits;
+    }
+
+    public void setProduits(DetailsDTO produits) {
+        this.produits = produits;
     }
 
     @Override
@@ -75,9 +105,12 @@ public class SneakersDTO implements Serializable {
     public String toString() {
         return "SneakersDTO{" +
             "id=" + getId() +
-            ", nom='" + getNom() + "'" +
-            ", couleur='" + getCouleur() + "'" +
             ", stock=" + getStock() +
+            ", nom='" + getNom() + "'" +
+            ", taille=" + getTaille() +
+            ", couleur='" + getCouleur() + "'" +
+            ", prix=" + getPrix() +
+            ", produits=" + getProduits() +
             "}";
     }
 }

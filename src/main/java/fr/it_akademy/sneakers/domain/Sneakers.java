@@ -24,14 +24,25 @@ public class Sneakers implements Serializable {
     @Column(name = "id")
     private Long id;
 
+    @Column(name = "stock")
+    private Long stock;
+
     @Column(name = "nom")
     private String nom;
+
+    @Column(name = "taille")
+    private Long taille;
 
     @Column(name = "couleur")
     private String couleur;
 
-    @Column(name = "stock")
-    private Long stock;
+    @Column(name = "prix")
+    private Float prix;
+
+    @JsonIgnoreProperties(value = { "sneakers" }, allowSetters = true)
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(unique = true)
+    private Details produits;
 
     @ManyToMany(fetch = FetchType.LAZY, mappedBy = "sneakersses")
     @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
@@ -53,6 +64,19 @@ public class Sneakers implements Serializable {
         this.id = id;
     }
 
+    public Long getStock() {
+        return this.stock;
+    }
+
+    public Sneakers stock(Long stock) {
+        this.setStock(stock);
+        return this;
+    }
+
+    public void setStock(Long stock) {
+        this.stock = stock;
+    }
+
     public String getNom() {
         return this.nom;
     }
@@ -64,6 +88,19 @@ public class Sneakers implements Serializable {
 
     public void setNom(String nom) {
         this.nom = nom;
+    }
+
+    public Long getTaille() {
+        return this.taille;
+    }
+
+    public Sneakers taille(Long taille) {
+        this.setTaille(taille);
+        return this;
+    }
+
+    public void setTaille(Long taille) {
+        this.taille = taille;
     }
 
     public String getCouleur() {
@@ -79,17 +116,30 @@ public class Sneakers implements Serializable {
         this.couleur = couleur;
     }
 
-    public Long getStock() {
-        return this.stock;
+    public Float getPrix() {
+        return this.prix;
     }
 
-    public Sneakers stock(Long stock) {
-        this.setStock(stock);
+    public Sneakers prix(Float prix) {
+        this.setPrix(prix);
         return this;
     }
 
-    public void setStock(Long stock) {
-        this.stock = stock;
+    public void setPrix(Float prix) {
+        this.prix = prix;
+    }
+
+    public Details getProduits() {
+        return this.produits;
+    }
+
+    public void setProduits(Details details) {
+        this.produits = details;
+    }
+
+    public Sneakers produits(Details details) {
+        this.setProduits(details);
+        return this;
     }
 
     public Set<Commande> getCommandes() {
@@ -147,9 +197,11 @@ public class Sneakers implements Serializable {
     public String toString() {
         return "Sneakers{" +
             "id=" + getId() +
-            ", nom='" + getNom() + "'" +
-            ", couleur='" + getCouleur() + "'" +
             ", stock=" + getStock() +
+            ", nom='" + getNom() + "'" +
+            ", taille=" + getTaille() +
+            ", couleur='" + getCouleur() + "'" +
+            ", prix=" + getPrix() +
             "}";
     }
 }

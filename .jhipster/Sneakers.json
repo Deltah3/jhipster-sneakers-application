@@ -5,20 +5,35 @@
   "entityTableName": "sneakers",
   "fields": [
     {
+      "fieldName": "stock",
+      "fieldType": "Long"
+    },
+    {
       "fieldName": "nom",
       "fieldType": "String"
+    },
+    {
+      "fieldName": "taille",
+      "fieldType": "Long"
     },
     {
       "fieldName": "couleur",
       "fieldType": "String"
     },
     {
-      "fieldName": "stock",
-      "fieldType": "Long"
+      "fieldName": "prix",
+      "fieldType": "Float"
     }
   ],
   "name": "Sneakers",
-  "relationships": [],
+  "relationships": [
+    {
+      "otherEntityName": "details",
+      "relationshipName": "produits",
+      "relationshipSide": "left",
+      "relationshipType": "one-to-one"
+    }
+  ],
   "searchEngine": "no",
   "service": "serviceImpl"
 }

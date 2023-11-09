@@ -12,10 +12,21 @@
         status Boolean 
     }
     
+    entity Details {
+    	description String
+        reference String
+    }
+    
     entity Sneakers {
+    	stock Long
     	nom String
+        taille Long
         couleur String
-        stock Long
+        prix Float
+    }
+    
+    relationship OneToOne {
+    	Sneakers{produits} to Details
     }
     
     relationship OneToMany {
@@ -26,5 +37,5 @@
     	Commande{sneakerss} to Sneakers
     }
     
-    dto Client, Commande, Sneakers with mapstruct
-    service Client, Commande, Sneakers with serviceImpl
+    dto Client, Commande, Details, Sneakers with mapstruct
+    service Client, Commande, Details, Sneakers with serviceImpl
