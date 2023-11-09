@@ -29,9 +29,12 @@
         <thead>
           <tr>
             <th scope="row"><span v-text="t$('global.field.id')"></span></th>
-            <th scope="row"><span v-text="t$('sneakersApplicationApp.sneakers.nom')"></span></th>
-            <th scope="row"><span v-text="t$('sneakersApplicationApp.sneakers.couleur')"></span></th>
             <th scope="row"><span v-text="t$('sneakersApplicationApp.sneakers.stock')"></span></th>
+            <th scope="row"><span v-text="t$('sneakersApplicationApp.sneakers.nom')"></span></th>
+            <th scope="row"><span v-text="t$('sneakersApplicationApp.sneakers.taille')"></span></th>
+            <th scope="row"><span v-text="t$('sneakersApplicationApp.sneakers.couleur')"></span></th>
+            <th scope="row"><span v-text="t$('sneakersApplicationApp.sneakers.prix')"></span></th>
+            <th scope="row"><span v-text="t$('sneakersApplicationApp.sneakers.produits')"></span></th>
             <th scope="row"></th>
           </tr>
         </thead>
@@ -40,9 +43,18 @@
             <td>
               <router-link :to="{ name: 'SneakersView', params: { sneakersId: sneakers.id } }">{{ sneakers.id }}</router-link>
             </td>
-            <td>{{ sneakers.nom }}</td>
-            <td>{{ sneakers.couleur }}</td>
             <td>{{ sneakers.stock }}</td>
+            <td>{{ sneakers.nom }}</td>
+            <td>{{ sneakers.taille }}</td>
+            <td>{{ sneakers.couleur }}</td>
+            <td>{{ sneakers.prix }}</td>
+            <td>
+              <div v-if="sneakers.produits">
+                <router-link :to="{ name: 'DetailsView', params: { detailsId: sneakers.produits.id } }">{{
+                  sneakers.produits.id
+                }}</router-link>
+              </div>
+            </td>
             <td class="text-right">
               <div class="btn-group">
                 <router-link :to="{ name: 'SneakersView', params: { sneakersId: sneakers.id } }" custom v-slot="{ navigate }">

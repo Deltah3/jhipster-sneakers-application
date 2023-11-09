@@ -18,9 +18,12 @@
         "title": "Sneakers"
       },
       "id": "ID",
-      "nom": "Nom",
-      "couleur": "Couleur",
       "stock": "Stock",
+      "nom": "Nom",
+      "taille": "Taille",
+      "couleur": "Couleur",
+      "prix": "Prix",
+      "produits": "Produits",
       "commande": "Commande"
     }
   }

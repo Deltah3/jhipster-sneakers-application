@@ -3,26 +3,20 @@ import { useI18n } from 'vue-i18n';
 import { useRoute, useRouter } from 'vue-router';
 import { useVuelidate } from '@vuelidate/core';
 
-import SneakersService from './sneakers.service';
+import DetailsService from './details.service';
 import { useValidation } from '@/shared/composables';
 import { useAlertService } from '@/shared/alert/alert.service';
 
-import DetailsService from '@/entities/details/details.service';
-import { type IDetails } from '@/shared/model/details.model';
-import { type ISneakers, Sneakers } from '@/shared/model/sneakers.model';
+import { type IDetails, Details } from '@/shared/model/details.model';
 
 export default defineComponent({
   compatConfig: { MODE: 3 },
-  name: 'SneakersUpdate',
+  name: 'DetailsUpdate',
   setup() {
-    const sneakersService = inject('sneakersService', () => new SneakersService());
+    const detailsService = inject('detailsService', () => new DetailsService());
     const alertService = inject('alertService', () => useAlertService(), true);
 
-    const sneakers: Ref<ISneakers> = ref(new Sneakers());
-
-    const detailsService = inject('detailsService', () => new DetailsService());
-
-    const details: Ref<IDetails[]> = ref([]);
+    const details: Ref<IDetails> = ref(new Details());
     const isSaving = ref(false);
     const currentLanguage = inject('currentLanguage', () => computed(() => navigator.language ?? 'fr'), true);
 
@@ -31,51 +25,40 @@ export default defineComponent({
 
     const previousState = () => router.go(-1);
 
-    const retrieveSneakers = async sneakersId => {
+    const retrieveDetails = async detailsId => {
       try {
-        const res = await sneakersService().find(sneakersId);
-        sneakers.value = res;
+        const res = await detailsService().find(detailsId);
+        details.value = res;
       } catch (error) {
         alertService.showHttpError(error.response);
       }
     };
 
-    if (route.params?.sneakersId) {
-      retrieveSneakers(route.params.sneakersId);
+    if (route.params?.detailsId) {
+      retrieveDetails(route.params.detailsId);
     }
 
-    const initRelationships = () => {
-      detailsService()
-        .retrieve()
-        .then(res => {
-          details.value = res.data;
-        });
-    };
+    const initRelationships = () => {};
 
     initRelationships();
 
     const { t: t$ } = useI18n();
     const validations = useValidation();
     const validationRules = {
-      stock: {},
-      nom: {},
-      taille: {},
-      couleur: {},
-      prix: {},
-      produits: {},
-      commandes: {},
+      description: {},
+      reference: {},
+      sneakers: {},
     };
-    const v$ = useVuelidate(validationRules, sneakers as any);
+    const v$ = useVuelidate(validationRules, details as any);
     v$.value.$validate();
 
     return {
-      sneakersService,
+      detailsService,
       alertService,
-      sneakers,
+      details,
       previousState,
       isSaving,
       currentLanguage,
-      details,
       v$,
       t$,
     };
@@ -84,25 +67,25 @@ export default defineComponent({
   methods: {
     save(): void {
       this.isSaving = true;
-      if (this.sneakers.id) {
-        this.sneakersService()
-          .update(this.sneakers)
+      if (this.details.id) {
+        this.detailsService()
+          .update(this.details)
           .then(param => {
             this.isSaving = false;
             this.previousState();
-            this.alertService.showInfo(this.t$('sneakersApplicationApp.sneakers.updated', { param: param.id }));
+            this.alertService.showInfo(this.t$('sneakersApplicationApp.details.updated', { param: param.id }));
           })
           .catch(error => {
             this.isSaving = false;
             this.alertService.showHttpError(error.response);
           });
       } else {
-        this.sneakersService()
-          .create(this.sneakers)
+        this.detailsService()
+          .create(this.details)
           .then(param => {
             this.isSaving = false;
             this.previousState();
-            this.alertService.showSuccess(this.t$('sneakersApplicationApp.sneakers.created', { param: param.id }).toString());
+            this.alertService.showSuccess(this.t$('sneakersApplicationApp.details.created', { param: param.id }).toString());
           })
           .catch(error => {
             this.isSaving = false;

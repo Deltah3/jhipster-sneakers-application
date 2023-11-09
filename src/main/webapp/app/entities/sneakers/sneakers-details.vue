@@ -7,10 +7,22 @@
         </h2>
         <dl class="row jh-entity-details">
           <dt>
+            <span v-text="t$('sneakersApplicationApp.sneakers.stock')"></span>
+          </dt>
+          <dd>
+            <span>{{ sneakers.stock }}</span>
+          </dd>
+          <dt>
             <span v-text="t$('sneakersApplicationApp.sneakers.nom')"></span>
           </dt>
           <dd>
             <span>{{ sneakers.nom }}</span>
+          </dd>
+          <dt>
+            <span v-text="t$('sneakersApplicationApp.sneakers.taille')"></span>
+          </dt>
+          <dd>
+            <span>{{ sneakers.taille }}</span>
           </dd>
           <dt>
             <span v-text="t$('sneakersApplicationApp.sneakers.couleur')"></span>
@@ -19,10 +31,20 @@
             <span>{{ sneakers.couleur }}</span>
           </dd>
           <dt>
-            <span v-text="t$('sneakersApplicationApp.sneakers.stock')"></span>
+            <span v-text="t$('sneakersApplicationApp.sneakers.prix')"></span>
           </dt>
           <dd>
-            <span>{{ sneakers.stock }}</span>
+            <span>{{ sneakers.prix }}</span>
+          </dd>
+          <dt>
+            <span v-text="t$('sneakersApplicationApp.sneakers.produits')"></span>
+          </dt>
+          <dd>
+            <div v-if="sneakers.produits">
+              <router-link :to="{ name: 'DetailsView', params: { detailsId: sneakers.produits.id } }">{{
+                sneakers.produits.id
+              }}</router-link>
+            </div>
           </dd>
         </dl>
         <button type="submit" v-on:click.prevent="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">

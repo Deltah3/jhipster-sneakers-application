@@ -10,7 +10,8 @@
         "jhipster-needle-menu-add-entry": "JHipster will add additional entities here (do not translate!)",
         "client": "Client",
         "commande": "Commande",
-        "sneakers": "Sneakers"
+        "sneakers": "Sneakers",
+        "details": "Details"
       },
       "account": {
         "main": "Account",

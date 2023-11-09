@@ -1,0 +1,26 @@
+{
+  "sneakersApplicationApp": {
+    "details": {
+      "home": {
+        "title": "Details",
+        "refreshListLabel": "Actualiser la liste",
+        "createLabel": "Créer un nouveau Details",
+        "createOrEditLabel": "Créer ou éditer un Details",
+        "notFound": "Aucun Details trouvé"
+      },
+      "created": "Un nouveau Details a été créé avec l'identifiant { param }",
+      "updated": "Le Details avec l'identifiant { param } a été mis à jour",
+      "deleted": "Le Details avec l'identifiant { param } a été supprimé",
+      "delete": {
+        "question": "Êtes-vous certain de vouloir supprimer le Details { id } ?"
+      },
+      "detail": {
+        "title": "Details"
+      },
+      "id": "ID",
+      "description": "Description",
+      "reference": "Reference",
+      "sneakers": "Sneakers"
+    }
+  }
+}

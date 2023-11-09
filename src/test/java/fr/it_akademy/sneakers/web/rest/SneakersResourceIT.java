@@ -31,14 +31,20 @@ import org.springframework.transaction.annotation.Transactional;
 @WithMockUser
 class SneakersResourceIT {
 
+    private static final Long DEFAULT_STOCK = 1L;
+    private static final Long UPDATED_STOCK = 2L;
+
     private static final String DEFAULT_NOM = "AAAAAAAAAA";
     private static final String UPDATED_NOM = "BBBBBBBBBB";
+
+    private static final Long DEFAULT_TAILLE = 1L;
+    private static final Long UPDATED_TAILLE = 2L;
 
     private static final String DEFAULT_COULEUR = "AAAAAAAAAA";
     private static final String UPDATED_COULEUR = "BBBBBBBBBB";
 
-    private static final Long DEFAULT_STOCK = 1L;
-    private static final Long UPDATED_STOCK = 2L;
+    private static final Float DEFAULT_PRIX = 1F;
+    private static final Float UPDATED_PRIX = 2F;
 
     private static final String ENTITY_API_URL = "/api/sneakers";
     private static final String ENTITY_API_URL_ID = ENTITY_API_URL + "/{id}";
@@ -67,7 +73,12 @@ class SneakersResourceIT {
      * if they test an entity which requires the current entity.
      */
     public static Sneakers createEntity(EntityManager em) {
-        Sneakers sneakers = new Sneakers().nom(DEFAULT_NOM).couleur(DEFAULT_COULEUR).stock(DEFAULT_STOCK);
+        Sneakers sneakers = new Sneakers()
+            .stock(DEFAULT_STOCK)
+            .nom(DEFAULT_NOM)
+            .taille(DEFAULT_TAILLE)
+            .couleur(DEFAULT_COULEUR)
+            .prix(DEFAULT_PRIX);
         return sneakers;
     }
 
@@ -78,7 +89,12 @@ class SneakersResourceIT {
      * if they test an entity which requires the current entity.
      */
     public static Sneakers createUpdatedEntity(EntityManager em) {
-        Sneakers sneakers = new Sneakers().nom(UPDATED_NOM).couleur(UPDATED_COULEUR).stock(UPDATED_STOCK);
+        Sneakers sneakers = new Sneakers()
+            .stock(UPDATED_STOCK)
+            .nom(UPDATED_NOM)
+            .taille(UPDATED_TAILLE)
+            .couleur(UPDATED_COULEUR)
+            .prix(UPDATED_PRIX);
         return sneakers;
     }
 
@@ -101,9 +117,11 @@ class SneakersResourceIT {
         List<Sneakers> sneakersList = sneakersRepository.findAll();
         assertThat(sneakersList).hasSize(databaseSizeBeforeCreate + 1);
         Sneakers testSneakers = sneakersList.get(sneakersList.size() - 1);
-        assertThat(testSneakers.getNom()).isEqualTo(DEFAULT_NOM);
-        assertThat(testSneakers.getCouleur()).isEqualTo(DEFAULT_COULEUR);
         assertThat(testSneakers.getStock()).isEqualTo(DEFAULT_STOCK);
+        assertThat(testSneakers.getNom()).isEqualTo(DEFAULT_NOM);
+        assertThat(testSneakers.getTaille()).isEqualTo(DEFAULT_TAILLE);
+        assertThat(testSneakers.getCouleur()).isEqualTo(DEFAULT_COULEUR);
+        assertThat(testSneakers.getPrix()).isEqualTo(DEFAULT_PRIX);
     }
 
     @Test
@@ -137,9 +155,11 @@ class SneakersResourceIT {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(sneakers.getId().intValue())))
+            .andExpect(jsonPath("$.[*].stock").value(hasItem(DEFAULT_STOCK.intValue())))
             .andExpect(jsonPath("$.[*].nom").value(hasItem(DEFAULT_NOM)))
+            .andExpect(jsonPath("$.[*].taille").value(hasItem(DEFAULT_TAILLE.intValue())))
             .andExpect(jsonPath("$.[*].couleur").value(hasItem(DEFAULT_COULEUR)))
-            .andExpect(jsonPath("$.[*].stock").value(hasItem(DEFAULT_STOCK.intValue())));
+            .andExpect(jsonPath("$.[*].prix").value(hasItem(DEFAULT_PRIX.doubleValue())));
     }
 
     @Test
@@ -154,9 +174,11 @@ class SneakersResourceIT {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.id").value(sneakers.getId().intValue()))
+            .andExpect(jsonPath("$.stock").value(DEFAULT_STOCK.intValue()))
             .andExpect(jsonPath("$.nom").value(DEFAULT_NOM))
+            .andExpect(jsonPath("$.taille").value(DEFAULT_TAILLE.intValue()))
             .andExpect(jsonPath("$.couleur").value(DEFAULT_COULEUR))
-            .andExpect(jsonPath("$.stock").value(DEFAULT_STOCK.intValue()));
+            .andExpect(jsonPath("$.prix").value(DEFAULT_PRIX.doubleValue()));
     }
 
     @Test
@@ -178,7 +200,7 @@ class SneakersResourceIT {
         Sneakers updatedSneakers = sneakersRepository.findById(sneakers.getId()).orElseThrow();
         // Disconnect from session so that the updates on updatedSneakers are not directly saved in db
         em.detach(updatedSneakers);
-        updatedSneakers.nom(UPDATED_NOM).couleur(UPDATED_COULEUR).stock(UPDATED_STOCK);
+        updatedSneakers.stock(UPDATED_STOCK).nom(UPDATED_NOM).taille(UPDATED_TAILLE).couleur(UPDATED_COULEUR).prix(UPDATED_PRIX);
         SneakersDTO sneakersDTO = sneakersMapper.toDto(updatedSneakers);
 
         restSneakersMockMvc
@@ -193,9 +215,11 @@ class SneakersResourceIT {
         List<Sneakers> sneakersList = sneakersRepository.findAll();
         assertThat(sneakersList).hasSize(databaseSizeBeforeUpdate);
         Sneakers testSneakers = sneakersList.get(sneakersList.size() - 1);
-        assertThat(testSneakers.getNom()).isEqualTo(UPDATED_NOM);
-        assertThat(testSneakers.getCouleur()).isEqualTo(UPDATED_COULEUR);
         assertThat(testSneakers.getStock()).isEqualTo(UPDATED_STOCK);
+        assertThat(testSneakers.getNom()).isEqualTo(UPDATED_NOM);
+        assertThat(testSneakers.getTaille()).isEqualTo(UPDATED_TAILLE);
+        assertThat(testSneakers.getCouleur()).isEqualTo(UPDATED_COULEUR);
+        assertThat(testSneakers.getPrix()).isEqualTo(UPDATED_PRIX);
     }
 
     @Test
@@ -275,7 +299,7 @@ class SneakersResourceIT {
         Sneakers partialUpdatedSneakers = new Sneakers();
         partialUpdatedSneakers.setId(sneakers.getId());
 
-        partialUpdatedSneakers.nom(UPDATED_NOM);
+        partialUpdatedSneakers.stock(UPDATED_STOCK).nom(UPDATED_NOM);
 
         restSneakersMockMvc
             .perform(
@@ -289,9 +313,11 @@ class SneakersResourceIT {
         List<Sneakers> sneakersList = sneakersRepository.findAll();
         assertThat(sneakersList).hasSize(databaseSizeBeforeUpdate);
         Sneakers testSneakers = sneakersList.get(sneakersList.size() - 1);
+        assertThat(testSneakers.getStock()).isEqualTo(UPDATED_STOCK);
         assertThat(testSneakers.getNom()).isEqualTo(UPDATED_NOM);
+        assertThat(testSneakers.getTaille()).isEqualTo(DEFAULT_TAILLE);
         assertThat(testSneakers.getCouleur()).isEqualTo(DEFAULT_COULEUR);
-        assertThat(testSneakers.getStock()).isEqualTo(DEFAULT_STOCK);
+        assertThat(testSneakers.getPrix()).isEqualTo(DEFAULT_PRIX);
     }
 
     @Test
@@ -306,7 +332,7 @@ class SneakersResourceIT {
         Sneakers partialUpdatedSneakers = new Sneakers();
         partialUpdatedSneakers.setId(sneakers.getId());
 
-        partialUpdatedSneakers.nom(UPDATED_NOM).couleur(UPDATED_COULEUR).stock(UPDATED_STOCK);
+        partialUpdatedSneakers.stock(UPDATED_STOCK).nom(UPDATED_NOM).taille(UPDATED_TAILLE).couleur(UPDATED_COULEUR).prix(UPDATED_PRIX);
 
         restSneakersMockMvc
             .perform(
@@ -320,9 +346,11 @@ class SneakersResourceIT {
         List<Sneakers> sneakersList = sneakersRepository.findAll();
         assertThat(sneakersList).hasSize(databaseSizeBeforeUpdate);
         Sneakers testSneakers = sneakersList.get(sneakersList.size() - 1);
-        assertThat(testSneakers.getNom()).isEqualTo(UPDATED_NOM);
-        assertThat(testSneakers.getCouleur()).isEqualTo(UPDATED_COULEUR);
         assertThat(testSneakers.getStock()).isEqualTo(UPDATED_STOCK);
+        assertThat(testSneakers.getNom()).isEqualTo(UPDATED_NOM);
+        assertThat(testSneakers.getTaille()).isEqualTo(UPDATED_TAILLE);
+        assertThat(testSneakers.getCouleur()).isEqualTo(UPDATED_COULEUR);
+        assertThat(testSneakers.getPrix()).isEqualTo(UPDATED_PRIX);
     }
 
     @Test

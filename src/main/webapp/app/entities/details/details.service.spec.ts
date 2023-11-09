@@ -2,8 +2,8 @@
 import axios from 'axios';
 import sinon from 'sinon';
 
-import SneakersService from './sneakers.service';
-import { Sneakers } from '@/shared/model/sneakers.model';
+import DetailsService from './details.service';
+import { Details } from '@/shared/model/details.model';
 
 const error = {
   response: {
@@ -23,13 +23,13 @@ const axiosStub = {
 };
 
 describe('Service Tests', () => {
-  describe('Sneakers Service', () => {
-    let service: SneakersService;
+  describe('Details Service', () => {
+    let service: DetailsService;
     let elemDefault;
 
     beforeEach(() => {
-      service = new SneakersService();
-      elemDefault = new Sneakers(123, 0, 'AAAAAAA', 0, 'AAAAAAA', 0);
+      service = new DetailsService();
+      elemDefault = new Details(123, 'AAAAAAA', 'AAAAAAA');
     });
 
     describe('Service methods', () => {
@@ -52,7 +52,7 @@ describe('Service Tests', () => {
           });
       });
 
-      it('should create a Sneakers', async () => {
+      it('should create a Details', async () => {
         const returnedFromService = Object.assign(
           {
             id: 123,
@@ -67,7 +67,7 @@ describe('Service Tests', () => {
         });
       });
 
-      it('should not create a Sneakers', async () => {
+      it('should not create a Details', async () => {
         axiosStub.post.rejects(error);
 
         return service
@@ -78,14 +78,11 @@ describe('Service Tests', () => {
           });
       });
 
-      it('should update a Sneakers', async () => {
+      it('should update a Details', async () => {
         const returnedFromService = Object.assign(
           {
-            stock: 1,
-            nom: 'BBBBBB',
-            taille: 1,
-            couleur: 'BBBBBB',
-            prix: 1,
+            description: 'BBBBBB',
+            reference: 'BBBBBB',
           },
           elemDefault,
         );
@@ -98,7 +95,7 @@ describe('Service Tests', () => {
         });
       });
 
-      it('should not update a Sneakers', async () => {
+      it('should not update a Details', async () => {
         axiosStub.put.rejects(error);
 
         return service
@@ -109,13 +106,13 @@ describe('Service Tests', () => {
           });
       });
 
-      it('should partial update a Sneakers', async () => {
+      it('should partial update a Details', async () => {
         const patchObject = Object.assign(
           {
-            stock: 1,
-            nom: 'BBBBBB',
+            description: 'BBBBBB',
+            reference: 'BBBBBB',
           },
-          new Sneakers(),
+          new Details(),
         );
         const returnedFromService = Object.assign(patchObject, elemDefault);
 
@@ -127,7 +124,7 @@ describe('Service Tests', () => {
         });
       });
 
-      it('should not partial update a Sneakers', async () => {
+      it('should not partial update a Details', async () => {
         axiosStub.patch.rejects(error);
 
         return service
@@ -138,14 +135,11 @@ describe('Service Tests', () => {
           });
       });
 
-      it('should return a list of Sneakers', async () => {
+      it('should return a list of Details', async () => {
         const returnedFromService = Object.assign(
           {
-            stock: 1,
-            nom: 'BBBBBB',
-            taille: 1,
-            couleur: 'BBBBBB',
-            prix: 1,
+            description: 'BBBBBB',
+            reference: 'BBBBBB',
           },
           elemDefault,
         );
@@ -156,7 +150,7 @@ describe('Service Tests', () => {
         });
       });
 
-      it('should not return a list of Sneakers', async () => {
+      it('should not return a list of Details', async () => {
         axiosStub.get.rejects(error);
 
         return service
@@ -167,14 +161,14 @@ describe('Service Tests', () => {
           });
       });
 
-      it('should delete a Sneakers', async () => {
+      it('should delete a Details', async () => {
         axiosStub.delete.resolves({ ok: true });
         return service.delete(123).then(res => {
           expect(res.ok).toBeTruthy();
         });
       });
 
-      it('should not delete a Sneakers', async () => {
+      it('should not delete a Details', async () => {
         axiosStub.delete.rejects(error);
 
         return service
