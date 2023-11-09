@@ -1,0 +1,24 @@
+{
+  "applications": "*",
+  "changelogDate": "20231109103632",
+  "dto": "mapstruct",
+  "entityTableName": "sneakers",
+  "fields": [
+    {
+      "fieldName": "nom",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "couleur",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "stock",
+      "fieldType": "Long"
+    }
+  ],
+  "name": "Sneakers",
+  "relationships": [],
+  "searchEngine": "no",
+  "service": "serviceImpl"
+}

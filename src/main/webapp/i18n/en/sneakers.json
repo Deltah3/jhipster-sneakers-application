@@ -1,0 +1,27 @@
+{
+  "sneakersApplicationApp": {
+    "sneakers": {
+      "home": {
+        "title": "Sneakers",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new Sneakers",
+        "createOrEditLabel": "Create or edit a Sneakers",
+        "notFound": "No Sneakers found"
+      },
+      "created": "A new Sneakers is created with identifier { param }",
+      "updated": "A Sneakers is updated with identifier { param }",
+      "deleted": "A Sneakers is deleted with identifier { param }",
+      "delete": {
+        "question": "Are you sure you want to delete Sneakers { id }?"
+      },
+      "detail": {
+        "title": "Sneakers"
+      },
+      "id": "ID",
+      "nom": "Nom",
+      "couleur": "Couleur",
+      "stock": "Stock",
+      "commande": "Commande"
+    }
+  }
+}

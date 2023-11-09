@@ -1,0 +1,35 @@
+{
+  "applications": "*",
+  "changelogDate": "20231109103532",
+  "dto": "mapstruct",
+  "entityTableName": "commande",
+  "fields": [
+    {
+      "fieldName": "quantite",
+      "fieldType": "Long"
+    },
+    {
+      "fieldName": "dateCommande",
+      "fieldType": "Instant"
+    },
+    {
+      "fieldName": "dateLivraison",
+      "fieldType": "Instant"
+    },
+    {
+      "fieldName": "status",
+      "fieldType": "Boolean"
+    }
+  ],
+  "name": "Commande",
+  "relationships": [
+    {
+      "otherEntityName": "sneakers",
+      "relationshipName": "sneakerss",
+      "relationshipSide": "left",
+      "relationshipType": "many-to-many"
+    }
+  ],
+  "searchEngine": "no",
+  "service": "serviceImpl"
+}

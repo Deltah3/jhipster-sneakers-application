@@ -1,0 +1,34 @@
+{
+  "applications": "*",
+  "changelogDate": "20231109103432",
+  "dto": "mapstruct",
+  "entityTableName": "client",
+  "fields": [
+    {
+      "fieldName": "nom",
+      "fieldType": "String",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "adresse",
+      "fieldType": "String",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "email",
+      "fieldType": "String",
+      "fieldValidateRules": ["required"]
+    }
+  ],
+  "name": "Client",
+  "relationships": [
+    {
+      "otherEntityName": "commande",
+      "relationshipName": "commandes",
+      "relationshipSide": "left",
+      "relationshipType": "one-to-many"
+    }
+  ],
+  "searchEngine": "no",
+  "service": "serviceImpl"
+}

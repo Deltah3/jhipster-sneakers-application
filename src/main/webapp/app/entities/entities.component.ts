@@ -1,5 +1,8 @@
 import { defineComponent, provide } from 'vue';
 
+import ClientService from './client/client.service';
+import CommandeService from './commande/commande.service';
+import SneakersService from './sneakers/sneakers.service';
 import UserService from '@/entities/user/user.service';
 // jhipster-needle-add-entity-service-to-entities-component-import - JHipster will import entities services here
 
@@ -8,6 +11,9 @@ export default defineComponent({
   name: 'Entities',
   setup() {
     provide('userService', () => new UserService());
+    provide('clientService', () => new ClientService());
+    provide('commandeService', () => new CommandeService());
+    provide('sneakersService', () => new SneakersService());
     // jhipster-needle-add-entity-service-to-entities-component - JHipster will import entities services here
   },
 });

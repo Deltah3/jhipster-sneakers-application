@@ -1,0 +1,27 @@
+{
+  "sneakersApplicationApp": {
+    "sneakers": {
+      "home": {
+        "title": "Sneakers",
+        "refreshListLabel": "Actualiser la liste",
+        "createLabel": "Créer un nouveau Sneakers",
+        "createOrEditLabel": "Créer ou éditer un Sneakers",
+        "notFound": "Aucun Sneakers trouvé"
+      },
+      "created": "Un nouveau Sneakers a été créé avec l'identifiant { param }",
+      "updated": "Le Sneakers avec l'identifiant { param } a été mis à jour",
+      "deleted": "Le Sneakers avec l'identifiant { param } a été supprimé",
+      "delete": {
+        "question": "Êtes-vous certain de vouloir supprimer le Sneakers { id } ?"
+      },
+      "detail": {
+        "title": "Sneakers"
+      },
+      "id": "ID",
+      "nom": "Nom",
+      "couleur": "Couleur",
+      "stock": "Stock",
+      "commande": "Commande"
+    }
+  }
+}
